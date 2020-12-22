@@ -8,30 +8,35 @@ services:
   #   volumes:
   #     - ./install/1. Susep.SISRH.WebApi:/App:rw
   #     - ./install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/App/Settings:rw
-  # apigateway:
-  #   image: mcr.microsoft.com/dotnet/aspnet:3.1
-  #   working_dir: /App
-  #   command: dotnet Susep.SISRH.ApiGateway.dll
-  #   volumes:
-  #     - ./install/2. Susep.SISRH.ApiGateway:/App:rw
-  #     - ./install/Arquivos de configuração/2. Susep.SISRH.ApiGateway/Settings:/App/Settings:rw
+  api-gateway:
+    image: mcr.microsoft.com/dotnet/aspnet:3.1
+    working_dir: /App
+    command: dotnet Susep.SISRH.ApiGateway.dll
+    volumes:
+      - ./install/2. Susep.SISRH.ApiGateway:/App:rw
+      - ./install/Arquivos de configuração/2. Susep.SISRH.ApiGateway/Settings:/App/Settings:rw
+      - ./install/Arquivos de configuração/2. Susep.SISRH.ApiGateway/web.config:/App/web.config:rw
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Homolog
+    ports:
+      - 8081:80
   # web-app:
   #   image: mcr.microsoft.com/dotnet/aspnet:3.1
   #   working_dir: /App
   #   command: dotnet Susep.SISRH.WebApp.dll
   #   volumes:
   #     - ./install/3. Susep.SISRH.WebApp:/App:rw
-  ##     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/Settings:/App/Settings:rw
+  ##     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/App/env.js:ro
   #   ports:
   #     - 8080:80
   ## Utilização do Nginx no lugar do aspnet
-  # web-app-nginx:
-  #   image: nginx:1.19-alpine
-  #   volumes:
-  #     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/usr/share/nginx/html/env.js:ro
-  #     - ./install/3. Susep.SISRH.WebApp/ClientApp/dist:/usr/share/nginx/html:ro
-  #   ports:
-  #     - 8080:80
+  web-app-nginx:
+    image: nginx:1.19-alpine
+    volumes:
+      - ./install/3. Susep.SISRH.WebApp/ClientApp/dist:/usr/share/nginx/html:rw
+      - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/usr/share/nginx/html/env.js:ro
+    ports:
+      - 8080:80
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
@@ -44,4 +49,4 @@ services:
       - ./install/3. Inserir dados de teste.sql:/scripts/3.dados_teste:ro
       - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
     ports:
-      - 1434:1434
+      - 1433:1433

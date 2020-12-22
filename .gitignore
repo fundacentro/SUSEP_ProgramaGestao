@@ -1,1 +1,5 @@
 Logs*.txt
+install/1. Susep.SISRH.WebApi/Settings
+install/1. Susep.SISRH.WebApi/web.config
+install/2. Susep.SISRH.ApiGateway/web.config
+install/3. Susep.SISRH.WebApp/ClientApp/dist/env.js
