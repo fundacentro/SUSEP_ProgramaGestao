@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  # web-api:
+  #   image: mcr.microsoft.com/dotnet/aspnet:3.1
+  #   working_dir: /App
+  #   command: dotnet Susep.SISRH.WebApi.dll
+  #   volumes:
+  #     - ./install/1. Susep.SISRH.WebApi:/App:rw
+  #     - ./install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/App/Settings:rw
+  # apigateway:
+  #   image: mcr.microsoft.com/dotnet/aspnet:3.1
+  #   working_dir: /App
+  #   command: dotnet Susep.SISRH.ApiGateway.dll
+  #   volumes:
+  #     - ./install/2. Susep.SISRH.ApiGateway:/App:rw
+  #     - ./install/Arquivos de configuração/2. Susep.SISRH.ApiGateway/Settings:/App/Settings:rw
+  # web-app:
+  #   image: mcr.microsoft.com/dotnet/aspnet:3.1
+  #   working_dir: /App
+  #   command: dotnet Susep.SISRH.WebApp.dll
+  #   volumes:
+  #     - ./install/3. Susep.SISRH.WebApp:/App:rw
+  ##     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/Settings:/App/Settings:rw
+  #   ports:
+  #     - 8080:80
+  ## Utilização do Nginx no lugar do aspnet
+  # web-app-nginx:
+  #   image: nginx:1.19-alpine
+  #   volumes:
+  #     - ./install/Arquivos de configuração/3. Susep.SISRH.WebApp/ClientApp/dist/env.js:/usr/share/nginx/html/env.js:ro
+  #     - ./install/3. Susep.SISRH.WebApp/ClientApp/dist:/usr/share/nginx/html:ro
+  #   ports:
+  #     - 8080:80
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "P1ssw@rd"
+      ACCEPT_EULA: "Y"
+    command: /bin/bash /scripts/start-sql-server.sh
+    volumes:
+      - ./install/1. Criação da estrutura do banco de dados.sql:/scripts/1.estrutura_dados.sql:ro
+      - ./install/2. Inserir dados de domínio.sql:/scripts/2.dados_dominio.sql:ro
+      - ./install/3. Inserir dados de teste.sql:/scripts/3.dados_teste:ro
+      - ./start-sql-server.sh:/scripts/start-sql-server.sh:ro
+    ports:
+      - 1434:1434
