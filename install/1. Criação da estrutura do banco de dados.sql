@@ -1,4 +1,10 @@
-﻿CREATE TABLE [dbo].[CatalogoDominio](
+﻿/**
+ * Criação manual de schema ProgramaGestao
+ */
+CREATE SCHEMA [ProgramaGestao]
+GO
+
+CREATE TABLE [dbo].[CatalogoDominio](
 	[catalogoDominioId] [int] NOT NULL,
 	[classificacao] [varchar](50) NOT NULL,
 	[descricao] [varchar](100) NOT NULL,
