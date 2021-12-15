@@ -42,6 +42,7 @@ services:
     #image: susep
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
+    restart: unless-stopped    
     volumes:
       - ./api/Settings:/app/api/Settings:ro
       #- ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
@@ -99,6 +100,7 @@ services:
     # Imagem caso você queira testar na sua máquina
     #image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
+    restart: unless-stopped    
     working_dir: /app/gateway/
     volumes:
       - ./gateway/Settings:/app/gateway/Settings:ro
@@ -125,6 +127,7 @@ services:
     # Imagem caso você queira testar na sua máquina
     #image: susep
     command: dotnet Susep.SISRH.WebApp.dll
+    restart: unless-stopped    
     working_dir: /app/app/
     volumes:
       - ./app/env.js:/app/app/ClientApp/dist/env.js:ro
