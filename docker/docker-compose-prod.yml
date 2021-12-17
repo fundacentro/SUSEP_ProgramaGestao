@@ -7,8 +7,8 @@ services:
     image: traefik:2.5
     # Entrypoints:
     #  - web: O que é exposto na rede pela porta 80
-    #  - web-interno: Não exposto na rede - Ponto de entrada na 
-    #                 rede interna do Traefik utilizado para a comunicação do 
+    #  - web-interno: Não exposto na rede - Ponto de entrada na
+    #                 rede interna do Traefik utilizado para a comunicação do
     #                 api-gateway e web-api
     command: >
       --providers.docker=true
@@ -32,7 +32,7 @@ services:
      - traefik.http.services.traefik.loadbalancer.server.port=8080
     networks:
       - pgd
-    
+
   web-api:
     # Futuro oficial do Governo Federal
     #image: ghcr.io/spbgovbr/sistema_programa_de_gestao_susep/sgd:latest
@@ -42,40 +42,41 @@ services:
     #image: susep
     working_dir: /app/api/
     command: dotnet Susep.SISRH.WebApi.dll
-    restart: unless-stopped    
+    restart: unless-stopped
     volumes:
       - ./api/Settings:/app/api/Settings:ro
       #- ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
       - ../log/api:/app/api/Logs:rw
-    environment: 
+    environment:
       - ASPNETCORE_ENVIRONMENT=Homolog
 
       # Configurações de banco de dados
-      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=programa_gestao;User Id=sa;Password=P1ssw@rd;
+      #- ConnectionStrings__DefaultConnection=Server=db,1433;Database=programa_gestao;User Id=sa;Password=P1ssw@rd;
+      - ConnectionStrings__DefaultConnection=Server=10.32.8.76,1433;Database=programa_gestao;User Id=userdbsisgp;Password=Fund@2021;
 
       # Configurações de e-mail - Exemplo: Ministério da Economia
-      - emailOptions__EmailRemetente=no-reply@me.gov.br
-      - emailOptions__NomeRemetente=Programa de Gestão - ME
-      - emailOptions__SmtpServer=smtp.me.gov.br
+      - emailOptions__EmailRemetente=sisgp-nao-responda@fundacentro.gov.br
+      - emailOptions__NomeRemetente=SISGP Fundacentro
+      - emailOptions__SmtpServer=localmail.fundacentro.gov.br
       - emailOptions__Port=25
 
       # LDAP
       # -> URL do Servidor LDAP
-      - ldapOptions__Configurations__0__Url=
+      - ldapOptions__Configurations__0__Url=10.32.8.66
       # -> Porta do Servidor LDAP
       - ldapOptions__Configurations__0__Port=389
       # -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
-      - ldapOptions__Configurations__0__BindDN=CN=Fulano de tal,CN=Users,DC=orgao
+      - ldapOptions__Configurations__0__BindDN=CN=Susep,OU=TIC,OU=FDCT Usuarios CTN,DC=ctn,DC=fundacentro,DC=intra
       # -> Senha do usuário de serviço que será utilizado para autenticar no LDAP
-      - ldapOptions__Configurations__0__BindPassword=
+      - ldapOptions__Configurations__0__BindPassword=Fund@2021
       # -> DC que será utilizado para chegar à base de usuários no LDAP
-      - ldapOptions__Configurations__0__SearchBaseDC=CN=Users,DC=orgao
+      - ldapOptions__Configurations__0__SearchBaseDC=DC=ctn,DC=fundacentro,DC=intra
       # -> Consulta a ser aplicada no LDAP para encontrar os usuários
       - ldapOptions__Configurations__0__SearchFilter=(&(objectClass=user)(objectClass=person)(sAMAccountName={0}))
       # -> Campo do LDAP em que será encontrado o CPF do usuário
-      - ldapOptions__Configurations__0__CpfAttributeFilter=
+      - ldapOptions__Configurations__0__CpfAttributeFilter=wWWHomePage
       # -> Campo do LDAP em que será encontrado o e-mail do usuário
-      - ldapOptions__Configurations__0__EmailAttributeFilter=
+      - ldapOptions__Configurations__0__EmailAttributeFilter=mail
 
     # Habilitar somente para debug
     # ports:
@@ -100,12 +101,12 @@ services:
     # Imagem caso você queira testar na sua máquina
     #image: susep
     command: dotnet Susep.SISRH.ApiGateway.dll
-    restart: unless-stopped    
+    restart: unless-stopped
     working_dir: /app/gateway/
     volumes:
       - ./gateway/Settings:/app/gateway/Settings:ro
       - ../log/gateway:/app/gateway/Logs:rw
-    environment: 
+    environment:
       - ASPNETCORE_ENVIRONMENT=Homolog
     labels:
      - traefik.enable=true
@@ -127,7 +128,7 @@ services:
     # Imagem caso você queira testar na sua máquina
     #image: susep
     command: dotnet Susep.SISRH.WebApp.dll
-    restart: unless-stopped    
+    restart: unless-stopped
     working_dir: /app/app/
     volumes:
       - ./app/env.js:/app/app/ClientApp/dist/env.js:ro
