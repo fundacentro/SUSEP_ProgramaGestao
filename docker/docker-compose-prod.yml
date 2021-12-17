@@ -107,7 +107,7 @@ services:
       - ./gateway/Settings:/app/gateway/Settings:ro
       - ../log/gateway:/app/gateway/Logs:rw
     environment:
-      - ASPNETCORE_ENVIRONMENT=Homolog
+      - ASPNETCORE_ENVIRONMENT=Prod
     labels:
      - traefik.enable=true
      - traefik.http.routers.gateway.rule=PathPrefix(`/gateway`)
