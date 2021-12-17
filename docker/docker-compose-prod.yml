@@ -62,7 +62,7 @@ services:
 
       # LDAP
       # -> URL do Servidor LDAP
-      - ldapOptions__Configurations__0__Url=10.32.8.66
+      - ldapOptions__Configurations__0__Url=10.32.8.63
       # -> Porta do Servidor LDAP
       - ldapOptions__Configurations__0__Port=389
       # -> DN do usuário de serviço que será utilizado para autenticar no LDAP"
