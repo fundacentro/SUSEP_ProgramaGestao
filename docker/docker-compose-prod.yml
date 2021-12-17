@@ -48,7 +48,7 @@ services:
       #- ../install/Arquivos de configuração/1. Susep.SISRH.WebApi/Settings:/app/api/Settings:ro
       - ../log/api:/app/api/Logs:rw
     environment:
-      - ASPNETCORE_ENVIRONMENT=Homolog
+      - ASPNETCORE_ENVIRONMENT=Prod
 
       # Configurações de banco de dados
       #- ConnectionStrings__DefaultConnection=Server=db,1433;Database=programa_gestao;User Id=sa;Password=P1ssw@rd;
