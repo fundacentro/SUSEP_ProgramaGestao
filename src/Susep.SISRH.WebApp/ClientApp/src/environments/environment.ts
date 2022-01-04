@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  identityUrl: "http://homolog2.susep.gov.br/safe/autenticacao",
-  apiGatewayUrl: "http://homolog2.susep.gov.br/safe/sisrhapig/api/v1/",
+  identityUrl: "http://api-gateway/gateway",
+  apiGatewayUrl: "http://api-gateway/gateway",
   modo: 'normal', // 'avancado',
   valorPadraoTempoComparecimento: null, // 'avancado',
   valorPadraoTermosUso: null, // 'avancado',
