@@ -23,11 +23,11 @@ namespace Susep.SISRH.ApiGateway
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
              WebHost.CreateDefaultBuilder(args)
-                    .UseEnvironment(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development")
+                    .UseEnvironment(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Prod")
                     .ConfigureAppConfiguration((hostingContext, config) =>
                        config.SetBasePath(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "Settings"))
-                             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                             .AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddJsonFile($"appsettings.Prod.json", true, true)
+                             .AddJsonFile($"ocelot.Prod.json", true, true)
                              .AddEnvironmentVariables()
                     )
                     .UseSerilog((context, logger) => logger.ReadFrom.Configuration(context.Configuration))

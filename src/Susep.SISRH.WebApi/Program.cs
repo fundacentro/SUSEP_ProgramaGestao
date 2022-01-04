@@ -8,12 +8,12 @@ using System.IO;
 namespace Susep.SISRH.WebApi
 {
     /// <summary>
-    /// Classe de execução do programa
+    /// Classe de execuï¿½ï¿½o do programa
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// Constrói o programa inicial
+        /// Constrï¿½i o programa inicial
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
@@ -28,12 +28,12 @@ namespace Susep.SISRH.WebApi
         /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                   .UseEnvironment(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development")
+                   .UseEnvironment(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Prod")
                    .ConfigureAppConfiguration((hostingContext, config) =>
                        config.SetBasePath(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "Settings"))
-                             .AddJsonFile($"connectionstrings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                             .AddJsonFile($"messagebroker.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
+                             .AddJsonFile($"connectionstrings.Prod.json", true, true)
+                             .AddJsonFile($"appsettings.Prod.json", true, true)
+                             .AddJsonFile($"messagebroker.Prod.json", true, true)
                              .AddEnvironmentVariables())
                    .UseSerilog((context, logger) => logger.ReadFrom.Configuration(context.Configuration))
                    .UseStartup<Startup>();
